@@ -5,7 +5,7 @@ require_relative 'application'
 Rails.application.initialize!
 
 if Rails.env.development? || Rails.env.production?
-
+  ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
     :user_name => 'app69851461@heroku.com',
     :password => 'kbuyasce5771',
