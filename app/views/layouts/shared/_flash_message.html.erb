@@ -1,0 +1,14 @@
+<%# flash[:success] = "This is success!!!" %>
+<%# flash[:info] = "This is info!!!" %>
+<%# flash[:warning] = "This is warning!!!" %>
+<%# flash[:notice] = "This is notice!!!" %>
+<%# flash[:danger] = "This is danger!!!" %>
+<%# flash[:error] = "This is error!!!" %>
+
+<% flash.each do |key, msg| %>
+  <!-- <div class="alert alert-success flash" role="alert"> -->
+  <div class="alert <%= flash_class(key) %> flash" role="alert">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <%= msg %>
+  </div>
+<% end %>
