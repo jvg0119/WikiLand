@@ -40,12 +40,24 @@ gem 'jbuilder', '~> 2.5'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+
+  gem 'rspec-rails', '~> 3.6'
+  gem 'factory_girl_rails', '~> 4.8'
+  gem 'shoulda', '~> 3.5'
+  gem 'faker', '~> 1.7', '>= 1.7.3'
+  gem 'capybara', '~> 2.14'
+  gem 'launchy', '~> 2.4', '>= 2.4.3'
+  gem 'database_cleaner', '~> 1.6', '>= 1.6.1'
+  gem 'rails-controller-testing', '~> 1.0', '>= 1.0.2'
+
+  gem 'pry-rails', '~> 0.3.6'
 end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'
+
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'

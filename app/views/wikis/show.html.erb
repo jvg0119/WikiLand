@@ -1,0 +1,5 @@
+<h1><%= @wiki.title %></h1>
+<%= @wiki.body %>
+<%= link_to "All Wikis", wikis_path %>
+<%= link_to "Edit", edit_wiki_path(@wiki) %>
+<%= link_to "Delete", wiki_path(@wiki), method: :delete %>
