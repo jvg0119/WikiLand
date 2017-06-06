@@ -10,6 +10,7 @@ module ApplicationHelper
       when "info" then "alert-info"
       when "warning" then "alert-warning"
       when "notice" then "alert-warning"
+      when "alert" then "alert-warning"
       when "danger" then "alert-danger"
       when "error" then "alert-danger"
     end

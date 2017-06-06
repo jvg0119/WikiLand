@@ -1,11 +1,23 @@
 
 <%= form_for(@wiki) do |f| %>
-  <%= f.label :title %>
-  <%= f.text_field :title %>
 
-  <%= f.label :body %>
-  <%= f.text_area :body %>
+<div class="rows">
+  <div class="col-md-7">
 
-  <%= f.submit %>
+    <div form-group>
+      <%= f.label :title %>
+      <%= f.text_field :title, class: "form-control",  placeholder: "Enter title" %><br/>
+    </div>
+    <div form-group>
+      <%= f.label :body %>
+      <%= f.text_area :body, rows: 8, class: "form-control",  placeholder: "Enter body" %><br/>
+    </div>
+
+    <div class="actions">
+      <%= f.submit class: "btn btn-md btn-success" %>
+    </div>
+
+  </div>
+</div>
 
 <% end %>

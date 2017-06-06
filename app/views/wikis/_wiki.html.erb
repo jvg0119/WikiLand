@@ -1,0 +1,11 @@
+
+<tr>
+  <td><h4><%= link_to (wiki.title), wiki_path(wiki) %></h4></td>
+  <td><%= link_to "Edit", edit_wiki_path(wiki), class: "btn btn-md btn-success" if policy(wiki).edit? %></td>
+  <td><%= link_to "Delete", wiki_path(wiki), method: :delete, class: "btn btn-md btn-danger", data: {confirm: "Are you sure?"} if policy(wiki).destroy? %></td>
+</tr>
+<%# @wikis.each do |wiki| %>
+  <%#= wiki.title %>
+  <%#= link_to (wiki.title), wiki %>
+
+<%# end %>
