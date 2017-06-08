@@ -54,12 +54,14 @@ describe "Wikis" do
       login_as(my_user, scope: :user) # I want to understand this login_as what is scope?
       visit(wikis_path)
 
-      click_link("Create new wiki")
+      click_link("create-new-wiki")
+      #find("#create-new-wiki").click
       expect(current_path).to eq(new_wiki_path)
       fill_in("Title", with: "New Title")
       fill_in("Body", with: "New body")
 
-      click_button("Create Wiki")
+      #click_link("Create new wiki")
+      click_button("Create Wiki") # uses an id to find link
       expect(current_path).to eq(wiki_path(Wiki.last))
       expect(page).to have_content("New Title")
       expect(page).to have_content("New body")
@@ -70,7 +72,7 @@ describe "Wikis" do
       login_as(my_user, scope: :user)
       visit(wikis_path)
 
-      click_link("Create new wiki")
+      click_link("create-new-wiki") # uses an id to find link
       expect(current_path).to eq(new_wiki_path)
       fill_in("Title", with: "")
       fill_in("Body", with: "New body")

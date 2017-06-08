@@ -5,6 +5,11 @@ class WikiPolicy < ApplicationPolicy
     true
   end
 
+  def show?
+    #scope.where(:id => record.id).exists?
+    true
+  end
+
   def create?
     # false
     user.present?
@@ -29,7 +34,13 @@ class WikiPolicy < ApplicationPolicy
     end
 
     def resolve
-      scope.all
+      if user.try(:admin?)
+        scope.all
+      elsif user.try(:premium?)
+        scope.public_wikis + scope.private_wikis.where(user: user)
+      else
+        scope.public_wikis
+      end
     end
   end
 

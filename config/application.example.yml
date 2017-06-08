@@ -1,2 +1,4 @@
 SENDGRID_PASSWORD:
-SENDGRID_USERNAME: 
+SENDGRID_USERNAME:
+stripe_api_key:
+stripe_publishable_key:

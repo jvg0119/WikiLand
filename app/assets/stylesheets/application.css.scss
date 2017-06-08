@@ -21,11 +21,12 @@
 
 
 
-.active {
+.active-nav {
   background: darkgray;
   font-size: 1.3em;
   color: white;/*does not work??*/
 }
+
 
 .flash {
   font-size: 1.3em;
@@ -44,5 +45,17 @@
 /*style="background:gray; color:black; border:2px solid green;"*/
 
 .form-group {
-  
+
+}
+
+hr {
+  border: 1px darkgray solid;
+}
+
+body {
+    padding-bottom: 50px;
+}
+
+.bottom-well {
+  color: gray;
 }

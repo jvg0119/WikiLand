@@ -1,7 +1,32 @@
 <div class="jumbotron">
-  <h1>Blocipedia3</h1>
+  <h1>Blocipedia3</h1><hr>
   <p>
     Wikis are a great way to collaborate on community-sourced content. Whether the wiki is for a hobby or work-related project, you will build an app that lets users create their own wikis and share them publicly or privately with other collaborators.
   </p>
-  <p><a class="btn btn-primary btn-lg" href="/about" role="button">Learn more</a></p>
+  <p><a class="btn btn-primary btn-md" href="/about" role="button">Learn more</a>
+  <%= link_to "Sign up", new_user_registration_path	, class: "btn btn-md btn-primary" if !current_user %><br/></p>
 </div>
+
+<% if current_user && current_user.standard? %>
+
+    <div class="well bottom-well rows col-md-5">
+      <%= link_to "Upgrade to premium", new_charge_path, class: "btn btn-md btn-primary" %><br/><hr>
+      <ul>
+        <li>Create private or public wikis</li>
+        <li>Access your private wikis</li>
+        <li>Access to all public wikis</li>
+      </ul>
+    </div>
+
+<% elsif current_user && current_user.premium? %>
+
+  <div class="well bottom-well rows col-md-5">
+    <%= link_to "Downgrade back to standard", downgrade_charges_path, method: :post, class: "btn btn-md btn-primary", data: {confirm: 'Are you sure?'} %><br/><hr>
+    <ul>
+      <li>If you have private wikis they will be converted to public wikis</li>
+      <li>Create public wikis</li>
+      <li>Access to all public wikis</li>
+    </ul>
+  </div>
+
+<% end %>

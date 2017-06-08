@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def active?(path)
-		"active" if current_page?(path)
+		"active-nav" if current_page?(path)
 	end
 
   def flash_class(key)
@@ -16,9 +16,9 @@ module ApplicationHelper
     end
   end
 
+  def amount_in_currency(amount_in_cents)
+    number_to_currency(amount_in_cents/100)
+  end
+
+
 end
-
-
-
-# flash_class(key)
-# alert-success

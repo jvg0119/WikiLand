@@ -69,3 +69,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise', '~> 4.3'
 gem 'figaro', '~> 1.1', '>= 1.1.1'
 gem 'pundit', '~> 1.1'
+gem 'stripe', '~> 2.11'

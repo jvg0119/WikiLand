@@ -6,6 +6,8 @@ class WikisController < ApplicationController
     #@wikis = Wiki.all
     #authorize @wikis
     @wikis = policy_scope(Wiki)
+    @public_wikis = Wiki.public_wikis
+    @private_wikis = Wiki.private_wikis.where(user: current_user)
   end
 
   def show
@@ -60,7 +62,7 @@ class WikisController < ApplicationController
   end
 
   def wiki_params
-    params.require(:wiki).permit(:title, :body)
+    params.require(:wiki).permit(:title, :body, :private)
   end
 
 end

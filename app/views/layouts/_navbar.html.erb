@@ -7,7 +7,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/index">Blocipedia</a>
+      <!-- <a class="navbar-brand" href="/index">Blocipedia</a> -->
+      <div class="<%= active?(index_path) %> navbar-brand">
+        <%= link_to "Blocipedia", index_path %>
+      </div>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
@@ -22,7 +25,7 @@
         </li> -->
         <!-- <li><a href="#">Page 2</a></li>
         <li><a href="#">Page 3</a></li> -->
-        <li class="<%= active?(index_path)%>"><%= link_to 'Home', wikis_path %></li>
+        <li class="<%= active?(wikis_path)%>"><%= link_to 'Home', wikis_path %></li>
         <li class="<%= active?(about_path)%>"><%= link_to 'About', about_path %></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

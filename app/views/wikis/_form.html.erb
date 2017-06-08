@@ -13,6 +13,17 @@
       <%= f.text_area :body, rows: 8, class: "form-control",  placeholder: "Enter body" %><br/>
     </div>
 
+    <% if (current_user.premium? || current_user.admin?) %>
+    <div form-group>
+      <%= f.check_box :private %>
+      <%= f.label :private,  "Private wiki"%>
+
+      <%#= f.label :private, class: "Private" do %>
+      <%#= f.check_box :private %> <!--Private wiki-->
+      <%# end %>
+    </div>
+    <% end %>
+
     <div class="actions">
       <%= f.submit class: "btn btn-md btn-success" %>
     </div>

@@ -4,12 +4,18 @@ RSpec.describe WikisController, type: :controller do
   let(:my_user) { create(:user) }
   let(:my_wiki) { create(:wiki, user: my_user) }
   let(:my_wiki2) { create(:wiki) }
+  let(:my_wiki3) { create(:wiki, private: true) }
 
   describe "un-signed or guest user access" do
     describe "GET #index" do
+      before { get :index }
       it "returns http success" do
-        get :index
         expect(response).to have_http_status(:success)
+      end
+      it "returns only public wikis" do
+        expect(assigns(:wikis)).to_not eq([my_wiki, my_wiki2, my_wiki3])
+        expect(assigns(:wikis)).to eq([my_wiki, my_wiki2])
+        expect(assigns(:wikis).count).to eq(2)
       end
     end
 
@@ -17,6 +23,11 @@ RSpec.describe WikisController, type: :controller do
       it "returns http success" do
         get :show, params: { id: my_wiki.id }
         expect(response).to have_http_status(:success)
+      end
+      it "assigns requested public wiki to @wiki" do
+        get :show, params: { id: my_wiki.id }
+        expect(assigns(:wiki)).to eq(my_wiki)
+        expect(assigns(:wiki)).to_not eq(my_wiki3)
       end
     end
 
@@ -69,8 +80,15 @@ RSpec.describe WikisController, type: :controller do
       it "returns http success" do
         expect(response).to have_http_status(:success)
       end
-      it "assigns @wikis" do
+      it "assigns public_wikis to @wikis" do
         expect(assigns(:wikis)).to eq([my_wiki, my_wiki2])
+        expect(assigns(:wikis)).to_not eq([my_wiki3])
+      end
+      it "does not assign private_wikis to @wikis" do
+        #my_wiki; my_wiki2; my_wiki3
+        expect(assigns(:wikis)).to include(my_wiki, my_wiki2)
+        expect(assigns(:wikis)).to_not include(my_wiki3)
+        expect(assigns(:wikis).count).to eq(2)
       end
       it "renders the index template" do
         expect(response).to render_template :index
@@ -82,8 +100,12 @@ RSpec.describe WikisController, type: :controller do
       it "returns http success" do
         expect(response).to have_http_status(:success)
       end
-      it "assigns requested wiki to @wiki" do
+      it "assigns requested public_wiki to @wiki" do
         expect(assigns(:wiki)).to eq(my_wiki)
+      end
+      it "does not assign to @wiki if requested wiki is private" do
+        get :show, params: { id: my_wiki.id }
+        expect(assigns(:wiki)).to_not eq(my_wiki3)
       end
       it "renders the show template" do
         expect(response).to render_template(:show)
@@ -95,7 +117,7 @@ RSpec.describe WikisController, type: :controller do
       it "returns http success" do
         expect(response).to have_http_status(:success)
       end
-      it "instantiates a new wiki" do
+      it "instantiates a new public wiki" do
         expect(assigns(:wiki)).to be_a_new(Wiki)
         expect(assigns(:wiki)).to_not be_nil
       end
@@ -129,8 +151,12 @@ RSpec.describe WikisController, type: :controller do
           expect{ post :create, params: { wiki: attributes_for(:wiki) }
           }.to change{ Wiki.count }.by(1)
         end
-        it "increases the number of Wiki by 1" do # same as above
+        it "increases the number of public Wiki by 1" do # same as above
           expect{ post :create, params: { wiki: {title: "New wiki title", body: "new body title"} }
+        }.to change(Wiki, :count).from(0).to(1)
+        end
+        it "increases the number of private Wiki by 1" do # same as above
+          expect{ post :create, params: { wiki: {title: "New wiki title", body: "new body title", private: true} }
         }.to change(Wiki, :count).from(0).to(1)
         end
         it "redirects to the newly created @wiki" do
