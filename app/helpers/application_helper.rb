@@ -20,5 +20,15 @@ module ApplicationHelper
     number_to_currency(amount_in_cents/100)
   end
 
+  # def markdown_to_html(text)
+  #   Markdown.new(text).to_html.html_safe
+  # end
+  def markdown_to_html(markdown)
+    renderer = Redcarpet::Render::HTML.new(hard_wrap: true, prettify: true)
+    extensions = {fenced_code_blocks: true}
+    redcarpet = Redcarpet::Markdown.new(renderer, extensions)
+    (redcarpet.render markdown).html_safe
+  end
+
 
 end

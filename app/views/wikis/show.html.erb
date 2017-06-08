@@ -1,5 +1,6 @@
-<h2><%= @wiki.title %></h2>
-<h5><%= @wiki.body %></h5>
+<h2><%= markdown_to_html(@wiki.title) %></h2>
+<h5><%#= Markdown.new(@wiki.body).to_html.html_safe %></h5>
+<h5><%= markdown_to_html(@wiki.body) %></h5>
 <%= link_to "Edit", edit_wiki_path(@wiki), class: "btn btn-md btn-success" if policy(@wiki).edit? %>
 <%= link_to "Delete", wiki_path(@wiki), method: :delete, class: "btn btn-md btn-danger", data: {confirm: "Are you sure?"} if policy(@wiki).destroy? %>
 <%= link_to "All Wikis", wikis_path, class: "btn btn-md btn-primary" %>
