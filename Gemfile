@@ -44,7 +44,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.6'
   gem 'factory_girl_rails', '~> 4.8'
   gem 'shoulda', '~> 3.5'
-  gem 'faker', '~> 1.7', '>= 1.7.3'
+
   gem 'capybara', '~> 2.14'
   gem 'launchy', '~> 2.4', '>= 2.4.3'
   gem 'database_cleaner', '~> 1.6', '>= 1.6.1'
@@ -73,3 +73,4 @@ gem 'stripe', '~> 2.11'
 gem 'redcarpet', '~> 3.4'
 #gem 'will_paginate', '~> 3.1', '>= 3.1.6'
 gem 'will_paginate-bootstrap', '~> 1.0', '>= 1.0.1'
+gem 'faker', '~> 1.7', '>= 1.7.3'
