@@ -33,6 +33,7 @@
         <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li> -->
         <% if current_user %>
+          <li><%= link_to "Premium", "#" if current_user.premium? %></li>
           <li><%= link_to (current_user.name || current_user.email), edit_user_registration_path(current_user) %></li>
           <!-- <li><%= link_to (current_user.name || current_user.email), "#", class: "glyphicons glyphicons-user" %></li> -->
           <li><%= link_to ' Logout', destroy_user_session_path, class: "glyphicon glyphicon-log-out", method: :delete, data: {confirm: 'Are you sure?'} %></li>

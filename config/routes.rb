@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :wikis
+  resources :wikis do
+    resources :collaborators, only: [:new, :create, :destroy]
+  end
 
   devise_for :users
   resources :users, only: [:edit, :update]

@@ -1,6 +1,12 @@
 
 <tr>
-  <td><h4><%= link_to (markdown_to_html wiki.title), wiki_path(wiki) %></h4></td>
+  <td>
+
+      <%#= link_to (markdown_to_html wiki.title), wiki_path(wiki) %>
+      <h4><%= link_to wiki.title, wiki %></h4>
+      <h5><%= truncate wiki.body, length: 75, separator: ' ' %></h5>
+
+  </td>
   <td><%= link_to "Edit", edit_wiki_path(wiki), class: "btn btn-md btn-success" if policy(wiki).edit? %></td>
   <td><%= link_to "Delete", wiki_path(wiki), method: :delete, class: "btn btn-md btn-danger", data: {confirm: "Are you sure?"} if policy(wiki).destroy? %></td>
 </tr>

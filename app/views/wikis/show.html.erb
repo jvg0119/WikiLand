@@ -1,6 +1,32 @@
-<h2><%= markdown_to_html(@wiki.title) %></h2>
+<% if @wiki.private? %>
+  <h2>Private Wiki</h2>
+<% else %>
+  <h2>Public Wiki</h2>
+<% end %>
+
+<h2><%= @wiki.title %></h2>
 <h5><%#= Markdown.new(@wiki.body).to_html.html_safe %></h5>
 <h5><%= markdown_to_html(@wiki.body) %></h5>
+
+<hr>
+
 <%= link_to "Edit", edit_wiki_path(@wiki), class: "btn btn-md btn-success" if policy(@wiki).edit? %>
 <%= link_to "Delete", wiki_path(@wiki), method: :delete, class: "btn btn-md btn-danger", data: {confirm: "Are you sure?"} if policy(@wiki).destroy? %>
 <%= link_to "All Wikis", wikis_path, class: "btn btn-md btn-primary" %>
+
+<% if @wiki.private? %>
+  <hr>
+
+  <h3>Collaborators for this wiki:</h3>
+
+  <% if @wiki.wiki_collaborators.present? %>
+
+    <% @wiki.wiki_collaborators.each do |collaborator| %>
+      <h4><%= collaborator.name %></h4>
+    <% end %>
+
+  <% else %>
+    <h5>None</h5>
+  <% end %>
+
+<% end %>

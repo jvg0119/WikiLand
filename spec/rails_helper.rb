@@ -60,7 +60,10 @@ RSpec.configure do |config|
 
   config.include FactoryGirl::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller
+  #config.include Devise::TestHelpers, :type => :controller # for devise <= 4.1.0
   config.include Warden::Test::Helpers  # for capybara methods check this later
+
+  Warden.test_mode!
 
   config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
   config.before(:each) { DatabaseCleaner.strategy = :transaction }

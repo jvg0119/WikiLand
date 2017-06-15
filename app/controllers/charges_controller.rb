@@ -20,7 +20,7 @@ class ChargesController < ApplicationController
 
     # upgrade to premium
     current_user.premium!
-    #current_user.wikis.where(private: true) 
+    #current_user.wikis.where(private: true)
     flash[:notice] = "Thanks for upgrading to #{@description} - #{current_user.email}"
     redirect_to root_url #user_path(current_user)
     # Stripe will send back CardErrors, with friendly messages
@@ -46,6 +46,19 @@ class ChargesController < ApplicationController
 
   def downgrade
     current_user.standard!
+
+    # wikis private to public
+    # you may have to check it here is a private wiki first
+    current_user.wikis.private_wikis.each  do |wiki|
+      wiki.update_attribute(:private, false)
+      wiki.collaborators.each do |collaborator|
+        collaborator.destroy
+      end
+    end
+
+    # what happens to the wiki_collaborators (collaborators)??
+    # I think they become orphans and therefore delete them also
+
     flash[:notice] = "You are now downgraded to statndard user - #{current_user.email}"
     redirect_to root_url
   end

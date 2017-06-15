@@ -1,13 +1,20 @@
 class WikisController < ApplicationController
+  require 'will_paginate/array'
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_wiki, only: [:show, :edit, :update, :destroy]
 
   def index
     #@wikis = Wiki.all
     #authorize @wikis
-    @wikis = policy_scope(Wiki)
-    @public_wikis = Wiki.public_wikis
-    @private_wikis = Wiki.private_wikis.where(user: current_user)
+
+    @wikis = policy_scope(Wiki).paginate(page: params[:page], per_page: 10)
+    @public_wikis = Wiki.public_wikis.paginate(page: params[:page], per_page: 10)
+    #
+    if current_user && current_user.admin?
+      @private_wikis = Wiki.private_wikis_admin.paginate(page: params[:page], per_page: 10)
+    else
+      @private_wikis = ((Wiki.private_wikis(current_user) + current_user.wiki_collaborations)).paginate(page: params[:page], per_page: 10) if current_user#.paginate(page: params[:page], per_page: 10) #if current_user
+    end
   end
 
   def show

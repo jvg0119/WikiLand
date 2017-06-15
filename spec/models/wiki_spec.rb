@@ -26,8 +26,10 @@ RSpec.describe Wiki, type: :model do
 
   describe "scopes" do
     before do
+      @user = create(:user)
       @public_wiki = create(:wiki)
-      @private_wiki = create(:wiki, private: true)
+      @private_wiki = create(:wiki, private: true, user: @user)
+
     end
     describe "public_wikis" do
       it "returns all public wikis" do
@@ -38,9 +40,9 @@ RSpec.describe Wiki, type: :model do
     end
     describe "private_wikis" do
       it "returns all private wikis" do
-        expect(Wiki.private_wikis.count).to eq(1)
-        expect(Wiki.private_wikis).to eq([@private_wiki])
-        expect(Wiki.private_wikis).to_not eq([@public_wiki])
+        expect(Wiki.private_wikis(@user).count).to eq(1)
+        expect(Wiki.private_wikis(@user)).to eq([@private_wiki])
+        expect(Wiki.private_wikis(@user)).to_not eq([@public_wiki])
       end
     end
   end   # scopes

@@ -6,7 +6,7 @@
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#all-wikis">All Wikis</a></li>
 
-    <% if current_user %>
+    <% if (current_user && current_user.premium?) || ( current_user && current_user.wiki_collaborations.present? ) || (current_user && current_user.admin?) %>
       <li><a data-toggle="tab" href="#public-wikis">Public Wikis</a></li>
       <li><a data-toggle="tab" href="#private-wikis">Private Wikis</a></li>
     <% end %>
@@ -15,7 +15,7 @@
 
   <div class="tab-content">
     <div id="all-wikis" class="tab-pane fade in active">
-      <h3>All Wikis</h3>
+      <h3>All Wikis(<%= all_wikis_count %>)</h3>
       <table class="table table-hover">
         <thead>
           <tr>
@@ -31,18 +31,20 @@
         <tbody>
           <%#= render @wikis %>
           <%= render partial: 'wiki', locals: { wikis: @wikis }, collection: @wikis %>
+
         </tbody>
       </table>
       <%#= link_to "Create new wiki", new_wiki_path, class: "btn btn-md btn-success" if policy(@wikis).create? %>
       <!-- <span id="create-new-wiki"><%= link_to "Create new wiki", new_wiki_path, class: "btn btn-md btn-success" if policy(Wiki).new? %></span> -->
-      <%= link_to "Create new wiki", new_wiki_path, id: "create-new-wiki", class: "btn btn-md btn-success" if policy(Wiki).create? %>
+      <%= link_to "Create new wiki", new_wiki_path, id: "create-new-wiki", class: "btn btn-md btn-success" if policy(Wiki).create? %><br/>
+      <%#= will_paginate @wikis %>
+      <%= will_paginate @collection, renderer: BootstrapPagination::Rails %>
     </div>
-
 
     <% if current_user %>
 
     <div id="public-wikis" class="tab-pane fade">
-      <h3>Public Wikis</h3>
+      <h3>Public Wikis(<%= public_wikis_count %>)</h3>
       <table class="table table-hover">
         <thead>
           <tr>
@@ -54,17 +56,17 @@
         <tbody>
           <%#= render @wikis %>
           <%= render partial: 'wiki', locals: { wikis: @public_wikis }, collection: @public_wikis %>
+          <%#= render partial: 'wiki', locals: { wikis: @wikis}, collection: @wikis%>
         </tbody>
       </table>
       <%#= link_to "Create new wiki", new_wiki_path, class: "btn btn-md btn-success" if policy(@wikis).create? %>
-      <%= link_to "Create new wiki", new_wiki_path, class: "btn btn-md btn-success" if policy(Wiki).new? %> <!-- OK -->
+      <%= link_to "Create new wiki", new_wiki_path, class: "btn btn-md btn-success" if policy(Wiki).new? %><br/> <!-- OK -->
+      <%= will_paginate @collection, renderer: BootstrapPagination::Rails %>
     </div>
-
-
 
     <div id="private-wikis" class="tab-pane fade">
 
-      <h3>Private Wikis</h3>
+      <h3>Private Wikis(<%= private_wikis_count %>)</h3>
       <table class="table table-hover">
         <thead>
           <tr>
@@ -78,7 +80,8 @@
           <%= render partial: 'wiki', locals: { wikis: @private_wikis }, collection: @private_wikis %>
         </tbody>
       </table>
-      <%= link_to "Create new wiki", new_wiki_path, class: "btn btn-md btn-success" if policy(Wiki).new? %>
+      <%= link_to "Create new wiki", new_wiki_path, class: "btn btn-md btn-success" if policy(Wiki).new? %><br/>
+      <%= will_paginate @collection, renderer: BootstrapPagination::Rails %>
 
     </div>
 
@@ -88,9 +91,7 @@
 </div>
 
 
-<!--   -->
-
-
+<!-- original  -->
 <!--
 <table class="table table-hover">
     <thead>
