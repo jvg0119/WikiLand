@@ -1,0 +1,34 @@
+.jumbotron
+  %h1 Blocipedia3
+  %hr
+  %p
+    Wikis are a great way to collaborate on community-sourced content. Whether the wiki is for a hobby or work-related project, you will build an app that lets users create their own wikis and share them publicly or privately with other collaborators.
+
+  %p
+    %a.btn.btn-primary.btn-md{href: "/about", role: "button"} Learn more
+    = link_to "Sign up", new_user_registration_path	, class: "btn btn-md btn-primary" if !current_user
+    %br
+
+
+
+- if current_user && current_user.standard?
+
+  .well.bottom-well.rows.col-md-5
+    = link_to "Upgrade to premium", new_charge_path, class: "btn btn-md btn-primary"
+    %br
+    %hr
+      %ul
+        %li Create private or public wikis
+        %liAccess your private wikis
+        %liAccess to all public wikis
+
+- elsif current_user && current_user.premium?
+
+  .well.bottom-well.rows.col-md-5
+    = link_to "Downgrade back to standard", downgrade_charges_path, method: :post, class: "btn btn-md btn-primary", data: {confirm: 'Are you sure?'}
+    %br
+    %hr
+    %ul
+      %li If you have private wikis they will be converted to public wikis
+      %li Create public wikis
+      %li Access to all public wikis

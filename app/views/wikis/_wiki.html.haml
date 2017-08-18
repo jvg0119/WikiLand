@@ -1,0 +1,12 @@
+
+%tr
+  %td>
+    %h4
+      = link_to wiki.title, wiki
+      %h5
+        = truncate wiki.body, length: 75, separator: ' '
+
+  %td
+    = link_to "Edit", edit_wiki_path(wiki), class: "btn btn-md btn-success" if policy(wiki).edit?
+  %td
+    = link_to "Delete", wiki_path(wiki), method: :delete, class: "btn btn-md btn-danger", data: {confirm: "Are you sure?"} if policy(wiki).destroy?

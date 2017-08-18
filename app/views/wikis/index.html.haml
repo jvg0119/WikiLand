@@ -1,0 +1,59 @@
+
+.container
+  %ul.nav.nav-tabs
+    %li.active
+      %a{"data-toggle" => "tab", :href => "#all-wikis"} All Wikis
+    - if (current_user && current_user.premium?) || ( current_user && current_user.wiki_collaborations.present? ) || (current_user && current_user.admin?)
+      %li
+        %a{"data-toggle" => "tab", :href => "#public-wikis"} Public Wikis
+      %li
+        %a{"data-toggle" => "tab", :href => "#private-wikis"} Private Wikis
+  .tab-content
+    #all-wikis.tab-pane.fade.in.active
+      %h3
+        All Wikis(#{all_wikis_count})
+      %table.table.table-hover
+        %thead
+          %tr
+            %th
+              %h4 Title
+            - if current_user
+              %th Edit
+              %th Delete
+        %tbody
+          = render partial: 'wiki', locals: { wikis: @wikis }, collection: @wikis
+      = link_to "Create new wiki", new_wiki_path, id: "create-new-wiki", class: "btn btn-md btn-success" if policy(Wiki).create?
+      %br/
+      = will_paginate @collection, renderer: BootstrapPagination::Rails
+    - if current_user
+      #public-wikis.tab-pane.fade
+        %h3
+          Public Wikis(#{public_wikis_count})
+        %table.table.table-hover
+          %thead
+            %tr
+              %th
+                %h4 Title
+              %th Edit
+              %th Delete
+          %tbody
+            = render partial: 'wiki', locals: { wikis: @public_wikis }, collection: @public_wikis
+        = link_to "Create new wiki", new_wiki_path, class: "btn btn-md btn-success" if policy(Wiki).new?
+        %br/
+
+        = will_paginate @collection, renderer: BootstrapPagination::Rails
+      #private-wikis.tab-pane.fade
+        %h3
+          Private Wikis(#{private_wikis_count})
+        %table.table.table-hover
+          %thead
+            %tr
+              %th
+                %h4 Title
+              %th Edit
+              %th Delete
+          %tbody
+            = render partial: 'wiki', locals: { wikis: @private_wikis }, collection: @private_wikis
+        = link_to "Create new wiki", new_wiki_path, class: "btn btn-md btn-success" if policy(Wiki).new?
+        %br/
+        = will_paginate @collection, renderer: BootstrapPagination::Rails

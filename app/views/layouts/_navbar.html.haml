@@ -1,0 +1,21 @@
+%nav.navbar.navbar{:style => "background:lightgray"}
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle{"data-target" => "#myNavbar", "data-toggle" => "collapse", :type => "button"}
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %div{:class => "#{active?(index_path)} navbar-brand"}
+        = link_to "Blocipedia", index_path
+    #myNavbar.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        %li{:class => "#{active?(wikis_path)}"}= link_to 'Home', wikis_path
+        %li{:class => "#{active?(about_path)}"}= link_to 'About', about_path
+      %ul.nav.navbar-nav.navbar-right
+        - if current_user
+          %li= link_to "Premium", "#" if current_user.premium?
+          %li= link_to (current_user.name || current_user.email), edit_user_registration_path(current_user)
+          %li= link_to ' Logout', destroy_user_session_path, class: "glyphicon glyphicon-log-out", method: :delete, data: {confirm: 'Are you sure?'}
+        - else
+          %li= link_to ' Sign Up', new_user_registration_path, class: "glyphicon glyphicon-user"
+          %li= link_to ' Login', new_user_session_path, class: "glyphicon glyphicon-log-in"

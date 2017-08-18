@@ -1,0 +1,20 @@
+!!!
+%html
+  %head
+    %title Blocipedia3
+    = csrf_meta_tags
+
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+  %body.background-body
+
+    = render 'layouts/navbar'
+
+    .container
+
+      = render 'layouts/shared/flash_message'
+
+      = yield
+
+      = render 'layouts/footer'
